@@ -1,0 +1,20 @@
+{
+  "include": ["./src/**/*.ts"],
+  "compilerOptions": {
+    "outDir": "./dist/lib-modules",
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2018",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "lib": ["dom", "es2018", "scripthost"],
+    "inlineSources": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDir": "./src"
+  }
+}

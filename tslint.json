@@ -1,0 +1,45 @@
+{
+  "extends": "./tslint-modules.js",
+  "rules": {
+    "indent": [true, "spaces", 2],
+    "jsdoc-format": true,
+    "max-line-length": [true, 120],
+    "no-parameter-reassignment": true,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore"
+    ],
+    
+    "no-conditional-assignment": true,
+    "no-console": true,
+    "no-debugger": true,
+    "no-empty": true,
+    "no-irregular-whitespace": true,
+    "no-sparse-arrays": true,
+    "use-isnan": true,
+
+    "cyclomatic-complexity": 10,
+    "return-undefined": true,
+    "curly": true,
+    "switch-default": true,
+    "triple-equals": [true, "allow-null-check"],
+    "no-arg": true,
+    "label-position": true,
+    "no-eval": true,
+    "no-switch-case-fall-through": true,
+    "number-literal-format": true,
+    "no-string-throw": true,
+    "no-unused-expression": true,
+    "radix": true,
+    "no-bitwise": true,
+
+    "no-shadowed-variable": true,
+    "no-unnecessary-initializer": true,
+    "no-use-before-declare": false,
+
+    "no-var-keyword": true,
+    "object-literal-shorthand": true,
+    "prefer-const": true
+  }
+}

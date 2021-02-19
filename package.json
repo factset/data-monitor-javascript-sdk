@@ -1,0 +1,52 @@
+{
+  "name": "data-monitor-javascript-sdk",
+  "version": "0.0.0",
+  "main": "dist/lib-modules/index.js",
+  "types": "dist/lib-modules/index.d.ts",
+  "private": true,
+  "sideEffects": false,
+  "engines": {
+    "node": "^10.14.0 || ^12.8.1"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "lint": "yarn tslint && yarn prettier --check",
+    "lint:fix": "yarn tslint --fix && yarn prettier --write",
+    "tslint": "tslint -c ./tslint.json --project ./tsconfig.json \"src/**/*.ts\"",
+    "prettier": "prettier --config ./.prettierrc \"src/**/*\"",
+    "build": "yarn clean && tsc",
+    "build:global": "yarn build && webpack",
+    "build:sdk": "bash ./scripts/build-sdk.sh",
+    "dev": "yarn clean && tsc -w",
+    "test": "jest --coverage",
+    "prepublishOnly": "node ./scripts/prepublish"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.2.0",
+    "tslib": "^1.9.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@release-it/conventional-changelog": "^1.1.4",
+    "@types/node": "~10.14",
+    "babel-jest": "^26.3.0",
+    "babel-loader": "^8.1.0",
+    "jest": "^26.4.2",
+    "prettier": "^1.19.1",
+    "replace": "^1.2.0",
+    "release-it": "^13.7.0",
+    "ts-jest": "^26.3.0",
+    "tslint": "^5.20.1",
+    "tslint-config-airbnb": "~5.8.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "~3.8.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "license": "Apache License 2.0"
+}
