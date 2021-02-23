@@ -4,9 +4,6 @@
   "main": "dist/lib-modules/index.js",
   "types": "dist/lib-modules/index.d.ts",
   "sideEffects": false,
-  "engines": {
-    "node": "^10.14.0 || ^12.8.1"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
