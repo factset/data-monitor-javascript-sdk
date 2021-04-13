@@ -17,8 +17,6 @@
     "tslint": "tslint -c ./tslint.json --project ./tsconfig.json \"src/**/*.ts\"",
     "prettier": "prettier --config ./.prettierrc \"src/**/*\"",
     "build": "yarn clean && tsc",
-    "build:global": "yarn build && webpack",
-    "build:sdk": "bash ./scripts/build-sdk.sh",
     "dev": "yarn clean && tsc -w",
     "test": "jest --coverage",
     "prepublishOnly": "node ./scripts/prepublish"
@@ -43,9 +41,7 @@
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "~5.8.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "~3.8.0",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "typescript": "~3.8.0"
   },
   "license": "Apache License 2.0"
 }
