@@ -1,12 +1,14 @@
 {
   "name": "data-monitor-javascript-sdk",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "dist/lib-modules/index.js",
   "types": "dist/lib-modules/index.d.ts",
-  "private": true,
   "sideEffects": false,
   "engines": {
     "node": "^10.14.0 || ^12.8.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "files": [
     "dist/"
