@@ -10,6 +10,10 @@
   "files": [
     "dist/"
   ],
+  "repository": {
+    "url": "https://github.com/factset/data-monitor-javascript-sdk",
+    "type": "git"
+  },
   "scripts": {
     "clean": "rm -rf dist/",
     "lint": "yarn tslint && yarn prettier --check",
