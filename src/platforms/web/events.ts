@@ -1,11 +1,11 @@
-import {Options, Action, Response, Request, Field} from './types';
-import {subscriptionMap} from './maps';
-import {ProxySubscriptionCollection} from './proxy-subscription-collection';
-import {invalidateCollection} from './invalidate';
-import {resolveDataPointGet} from './data-point';
+import {Options, Action, Response, Request, Field} from '../../types';
+import {subscriptionMap} from '../../maps';
+import {ProxySubscriptionCollection} from '../../proxy-subscription-collection';
+import {invalidateCollection} from '../../invalidate';
+import {resolveDataPointGet} from '../../data-point';
 import {flushBuffer, queueTask} from './buffer';
-import {processMessage} from './message/process-message';
-import {VERSION} from '.';
+import {processMessage} from '../../message/process-message';
+import {VERSION} from '../..';
 
 let frame: HTMLIFrameElement | undefined;
 let loadPromise: Promise<void>;
@@ -117,11 +117,11 @@ function handlePing() {
   loadPromiseResolver();
 }
 
-export function sendOn(subscriptionIdMap: Record<string, string>, fields: Field[], options?: Options) {
+export function sendOn(collection: ProxySubscriptionCollection, fields: Field[], options?: Options) {
   send({
     source: 'dataMonitor',
     action: Action.ON,
-    subscriptionIdMap,
+    subscriptionIdMap: collection.idMap,
     fields,
     options,
   });

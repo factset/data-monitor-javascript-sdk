@@ -1,5 +1,5 @@
 import {send} from './events';
-import {Request} from './types';
+import {Request} from '../../types';
 
 let taskBuffer: Request[] = [];
 export function flushBuffer() {

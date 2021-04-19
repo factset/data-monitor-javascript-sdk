@@ -1,9 +1,9 @@
 import {dataPoint, resolveDataPointGet, pendingRequests} from './';
-import * as events from '../events';
+import * as events from '../platforms/web/events';
 import {ComputedFieldDefinition, RoutedFieldDefinition, Field} from '../types';
 import {computedFieldStore} from './computed-field-store';
 
-jest.mock('../events');
+jest.mock('../platforms/web/events');
 
 describe('DataPoint module', () => {
   const computedField1: ComputedFieldDefinition = {

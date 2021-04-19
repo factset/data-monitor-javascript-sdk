@@ -10,6 +10,9 @@
   "files": [
     "dist/"
   ],
+  "browser": {
+    "./src/node/events.js": "./src/web/events.js"
+  },
   "scripts": {
     "clean": "rm -rf dist/",
     "lint": "yarn tslint && yarn prettier --check",
@@ -23,6 +26,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
@@ -35,8 +41,8 @@
     "babel-loader": "^8.1.0",
     "jest": "^26.4.2",
     "prettier": "^1.19.1",
-    "replace": "^1.2.0",
     "release-it": "^13.7.0",
+    "replace": "^1.2.0",
     "ts-jest": "^26.3.0",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "~5.8.0",

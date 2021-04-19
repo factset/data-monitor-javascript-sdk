@@ -1,8 +1,8 @@
-import {createIframe, sendOn, sendOnce, sendInit} from './events';
+import {createIframe, createWorker, sendOn, sendOnce, sendInit} from './platforms/node/events';
 import {OnParams, OnceParams, InitOptions} from './types';
 import {ProxySubscriptionCollection} from './proxy-subscription-collection';
 import {populateSubscriptionMap} from './maps';
-import {getIframeUrl, setEnvironment} from './env';
+import {getIframeUrl, Platform, platform, setEnvironment} from './env';
 import {resolveFields} from './data-point/resolve-fields';
 
 export const VERSION = 'VERSION_REPLACED_DURING_PREPUBLISH';
@@ -21,7 +21,9 @@ export async function init(options: InitOptions = {}, frameUrl?: string) {
     sendInit(globalOptions);
   }
 
-  await createIframe(`${frameUrl || getIframeUrl()}${idpid ? `?idpid=${idpid}` : ''}`);
+  if (platform === Platform.WEB) {
+    await createIframe(`${frameUrl || getIframeUrl()}${idpid ? `?idpid=${idpid}` : ''}`);
+  }
 }
 
 export function on({symbols, fields, success, error, options}: OnParams): ProxySubscriptionCollection {
@@ -41,7 +43,7 @@ export function on({symbols, fields, success, error, options}: OnParams): ProxyS
 
   const collection = new ProxySubscriptionCollection(symbols, resolvedFields.originalFields);
   populateSubscriptionMap(collection, resolvedFields, callbacks, options);
-  sendOn(collection.idMap, resolvedFields.requestableFields, options);
+  sendOn(collection, resolvedFields.requestableFields, options);
   return collection;
 }
 
@@ -60,7 +62,7 @@ export function once({symbols, fields, complete, success, error, options}: OnceP
   if (!resolvedFields.requestableFields.length) {
     throw new Error('Invalid Usage: field dependency tree contains no requestable fields');
   }
-
+  
   const collection = new ProxySubscriptionCollection(symbols, resolvedFields.originalFields);
   populateSubscriptionMap(collection, resolvedFields, callbacks, options, true);
   sendOnce(collection, resolvedFields.requestableFields, options);

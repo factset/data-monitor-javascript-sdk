@@ -1,4 +1,4 @@
-import {sendDataPointGet, sendDataPointRegister} from '../events';
+import {sendDataPointGet, sendDataPointRegister} from '../platforms/web/events';
 import {Field, FieldPayload} from '../types';
 import {normalizeFieldPayload} from './normalize-field-payload';
 import {computedFieldStore} from './computed-field-store';
