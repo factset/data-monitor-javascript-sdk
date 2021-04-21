@@ -1,19 +1,17 @@
 const express = require('express');
-const {getExternalFieldIds, once} = require('../dist/lib-modules/index');
+const {once, dataPoint} = require('../dist/lib-modules/index');
 
 require('dotenv').config({path: '../.env'});
 
 const app = express();
+app.use(express.json());
 
-app.route('/').all((req, res) => {
+app.route('/').get((req, res) => {
   const collection = once({
     symbols: ['FDS-USA', 'AMD-USA', 'NIO-USA', 'USDCNY-FX1'],
     fields: ['COMPANY_NAME', 'LAST_PRICE', 'HIGH', 'LOW'],
     options: {
       currency: 'local',
-    },
-    success: function(message, subscription) {
-      console.log('success', message);
     },
     complete: function(error, message, subscription) {
       res.json({
@@ -22,7 +20,26 @@ app.route('/').all((req, res) => {
       });
     },
   })
+
+  console.log(collection);
 });
+
+app.route('/get-fields').post(async(req, res) => {
+  const fields = req.body.fields;
+  const resolvedFields = await dataPoint.get(fields);
+  
+  res.json({
+    fields: resolvedFields,
+  })
+})
+
+app.route('/register').post((req, res) => {
+  console.log(req.body);
+  const fields = req.body.fields;
+
+  dataPoint.register(fields);
+  res.send('registered');
+})
 
 const port = process.env.PORT || 8000;
 

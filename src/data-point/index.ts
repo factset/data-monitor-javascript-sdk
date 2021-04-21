@@ -14,7 +14,7 @@ export const pendingRequests = new Map<string, PendingRequest>();
 let actionCounter = 0;
 
 class DataPoint {
-  public get(fields?: FieldPayload): Promise<Field[]> {
+  public async get(fields?: FieldPayload): Promise<Field[]> {
     const actionId = `dataPoint:${++actionCounter}`;
     const normalizedFields = normalizeFieldPayload(fields || []);
 
@@ -29,7 +29,8 @@ class DataPoint {
 
     const requiredFields = this.filterFields(normalizedFields, predicate);
     sendDataPointGet(actionId, requiredFields.length ? requiredFields : undefined);
-    return response;
+
+    return await response;
   }
 
   public register(fields: FieldPayload): void {
@@ -61,10 +62,11 @@ class DataPoint {
 
 export const dataPoint = new DataPoint();
 
-export function resolveDataPointGet(actionId: string, response: string | Field[]) {
+export function resolveDataPointGet(actionId: string, fields: string | Field[]) {
   const {resolve, requestedFields} = pendingRequests.get(actionId) || {};
+
   if (resolve) {
-    const responseFields = typeof response === 'string' ? JSON.parse(response) as Field[] : response;
+    const responseFields = typeof fields === 'string' ? JSON.parse(fields) as Field[] : fields;
 
     // pad the response with any locally registered computed fields
     requestedFields!.forEach(field => {

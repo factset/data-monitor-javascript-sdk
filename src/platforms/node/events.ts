@@ -51,7 +51,7 @@ export function sendDataPointGet(actionId: string, fields: Field[] | undefined) 
   const {port1, port2} = new MessageChannel();
 
   port1.on('message', (response: any) => {
-    resolveDataPointGet(actionId, response.resolvedFields);
+    resolveDataPointGet(actionId, response.fields);
 
     port1.close();
     port2.close();
@@ -117,8 +117,6 @@ function handleComplete({collectionId, message, error}: Response) {
     return;
   }
 
-  console.log(subscriptionMap, message, error, collectionId);
-
   if (message && entry.complete && entry.collection) {
     const errorResponse = error && JSON.parse(error);
     Object.keys(message).forEach(symbol => {
@@ -134,18 +132,6 @@ function handleComplete({collectionId, message, error}: Response) {
   }
 }
 
-// function handleDataPointGet({actionId, fields}: Response) {
-//   if (actionId && fields) {
-//     resolveDataPointGet(actionId, fields as string);
-//   }
-// }
-
-// function handlePing() {
-//   initialized = true;
-//   flushBuffer();
-//   loadPromiseResolver();
-// }
-
 // export function sendCancel(subscriptionIdMap: Record<string, string>) {
 //   send({
 //     source: 'dataMonitor',
@@ -154,58 +140,6 @@ function handleComplete({collectionId, message, error}: Response) {
 //   });
 // }
 
-// export function sendPause(subscriptionIdMap: Record<string, string>) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.PAUSE,
-//     subscriptionIdMap,
-//   });
-// }
-
-// export function sendResume(subscriptionIdMap: Record<string, string>) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.RESUME,
-//     subscriptionIdMap,
-//   });
-// }
-
-
-
-// export function sendDataPointRegister(fields: Field[]) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.DATA_POINT_REGISTER,
-//     fields,
-//   });
-// }
-
-// export function sendPing() {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.PING,
-//     sdkVersion: VERSION,
-//   });
-// }
-
-// export function sendInit(initOptions: Options) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.INIT,
-//     initOptions,
-//   });
-// }
-
-// export function send(request: Request) {
-//   if (!initialized && request.action !== Action.PING) {
-//     queueTask(request);
-//     return;
-//   }
-
-//   if (frame) {
-//     frame.contentWindow!.postMessage(request, '*');
-//   }
-// }
 export function createWorker() {
   return null;
 }
