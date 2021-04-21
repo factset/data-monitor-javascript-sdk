@@ -1,7 +1,7 @@
 import {createIframe, createWorker, sendOn, sendOnce, sendInit} from './platforms/node/events';
 import {OnParams, OnceParams, InitOptions} from './types';
 import {ProxySubscriptionCollection} from './proxy-subscription-collection';
-import {populateSubscriptionMap} from './maps';
+import {populateSubscriptionMap, subscriptionMap} from './maps';
 import {getIframeUrl, Platform, platform, setEnvironment} from './env';
 import {resolveFields} from './data-point/resolve-fields';
 
@@ -44,6 +44,8 @@ export function on({symbols, fields, success, error, options}: OnParams): ProxyS
   const collection = new ProxySubscriptionCollection(symbols, resolvedFields.originalFields);
   populateSubscriptionMap(collection, resolvedFields, callbacks, options);
   sendOn(collection, resolvedFields.requestableFields, options);
+
+  console.log(subscriptionMap);
   return collection;
 }
 

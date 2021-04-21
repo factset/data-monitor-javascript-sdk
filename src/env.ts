@@ -1,3 +1,4 @@
+require('dotenv').config({path: '../.env'});
 const {DATA_MONITOR_ENV} = process.env;
 
 export enum Environment {
@@ -57,7 +58,7 @@ export function getMdgCredentials() {
   const idApp = process.env.MDG_ID_APP;
   const idUser = process.env.MDG_ID_USER;
   const credentials = process.env.MDG_CREDENTIALS;
-
+    
   return {
     idApp,
     idUser,

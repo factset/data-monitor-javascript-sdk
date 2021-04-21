@@ -6,7 +6,7 @@ require('dotenv').config({path: '../.env'});
 const app = express();
 
 app.route('/').all((req, res) => {
-  once({
+  const collection = once({
     symbols: ['FDS-USA', 'AMD-USA', 'NIO-USA', 'USDCNY-FX1'],
     fields: ['COMPANY_NAME', 'LAST_PRICE', 'HIGH', 'LOW'],
     options: {

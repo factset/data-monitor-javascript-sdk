@@ -1,4 +1,4 @@
-import {sendDataPointGet, sendDataPointRegister} from '../platforms/web/events';
+import {sendDataPointGet, sendDataPointRegister} from '../platforms/node/events';
 import {Field, FieldPayload} from '../types';
 import {normalizeFieldPayload} from './normalize-field-payload';
 import {computedFieldStore} from './computed-field-store';
@@ -61,10 +61,10 @@ class DataPoint {
 
 export const dataPoint = new DataPoint();
 
-export function resolveDataPointGet(actionId: string, response: string) {
+export function resolveDataPointGet(actionId: string, response: string | Field[]) {
   const {resolve, requestedFields} = pendingRequests.get(actionId) || {};
   if (resolve) {
-    const responseFields = JSON.parse(response) as Field[];
+    const responseFields = typeof response === 'string' ? JSON.parse(response) as Field[] : response;
 
     // pad the response with any locally registered computed fields
     requestedFields!.forEach(field => {

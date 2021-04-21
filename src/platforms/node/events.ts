@@ -10,6 +10,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import {getApiUrl, getFactsetApiKey, getMdgCredentials} from '../../env';
+import { resolveDataPointGet } from '../../data-point';
 
 const DATA_MONITOR_S3 = "http://localhost:8006/api/v1/node-worker";
 const dmPath = path.resolve(__dirname, './data-monitor.js')
@@ -46,8 +47,38 @@ const worker = new Worker(localPath, {
   }
 });
 
+export function sendDataPointGet(actionId: string, fields: Field[] | undefined) {
+  const {port1, port2} = new MessageChannel();
+
+  port1.on('message', (response: any) => {
+    resolveDataPointGet(actionId, response.resolvedFields);
+
+    port1.close();
+    port2.close();
+  })
+
+  worker.postMessage({port: port2, action: 'dataPointGet', data: {
+    fields
+  }}, [port2]);
+}
+
+export function sendDataPointRegister(fields: Field[]) {
+  const {port1, port2} = new MessageChannel();
+
+  port1.on('message', (response: any) => {
+    console.log(response);
+
+    port1.close();
+    port2.close();
+  })
+
+  worker.postMessage({port: port2, action: 'dataPointRegister', data: {
+    fields
+  }}, [port2]);
+}
+
 export function sendOnce(collection: ProxySubscriptionCollection, fields: Field[], options?: Options) {
-  const {port1, port2}  = new MessageChannel();
+  const {port1, port2} = new MessageChannel();
 
   port1.on('message', (response: any) => {
     handleComplete({
@@ -65,8 +96,6 @@ export function sendOnce(collection: ProxySubscriptionCollection, fields: Field[
     port1.close();
     port2.close();
   });
-
-  console.log(collection.idMap, fields, options);
 
   worker.postMessage({ port: port2, action: 'once', data: {
     symbols: Object.values(collection.idMap),
@@ -87,6 +116,8 @@ function handleComplete({collectionId, message, error}: Response) {
   if (!entry) {
     return;
   }
+
+  console.log(subscriptionMap, message, error, collectionId);
 
   if (message && entry.complete && entry.collection) {
     const errorResponse = error && JSON.parse(error);
@@ -115,36 +146,6 @@ function handleComplete({collectionId, message, error}: Response) {
 //   loadPromiseResolver();
 // }
 
-// export function sendOn(subscriptionIdMap: Record<string, string>, fields: Field[], options?: Options) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.ON,
-//     subscriptionIdMap,
-//     fields,
-//     options,
-//   });
-// }
-
-// export function sendOnce(collection: ProxySubscriptionCollection, fields: Field[], options?: Options) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.ONCE,
-//     subscriptionIdMap: collection.idMap,
-//     collectionId: collection.id,
-//     fields,
-//     options,
-//   });
-// }
-
-// export function sendUpdate(subscriptionIdMap: Record<string, string>, options: Options) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.UPDATE,
-//     subscriptionIdMap,
-//     options,
-//   });
-// }
-
 // export function sendCancel(subscriptionIdMap: Record<string, string>) {
 //   send({
 //     source: 'dataMonitor',
@@ -169,14 +170,7 @@ function handleComplete({collectionId, message, error}: Response) {
 //   });
 // }
 
-// export function sendDataPointGet(actionId: string, fields: Field[] | undefined) {
-//   send({
-//     source: 'dataMonitor',
-//     action: Action.DATA_POINT_GET,
-//     actionId,
-//     fields,
-//   });
-// }
+
 
 // export function sendDataPointRegister(fields: Field[]) {
 //   send({

@@ -2,6 +2,7 @@ import {Options, SubscriptionIdMap, Field} from './types';
 import {sendCancel, sendUpdate, sendPause, sendResume} from './platforms/web/events';
 import {ProxySubscription} from './proxy-subscription';
 import {invalidateCollection} from './invalidate';
+import {Platform, platform} from './env';
 
 export class ProxySubscriptionCollection {
   public subscriptions: Map<string, ProxySubscription> = new Map();
@@ -31,7 +32,7 @@ export class ProxySubscriptionCollection {
   }
 
   public update(options: Options) {
-    if (!this.active) {
+    if (!this.active || platform === Platform.NODE) {
       return;
     }
 
@@ -48,7 +49,7 @@ export class ProxySubscriptionCollection {
   }
 
   public pause() {
-    if (!this.active) {
+    if (!this.active || platform === Platform.NODE) {
       return;
     }
 
@@ -56,7 +57,7 @@ export class ProxySubscriptionCollection {
   }
 
   public resume() {
-    if (!this.active) {
+    if (!this.active || platform === Platform.NODE) {
       return;
     }
 
