@@ -1,4 +1,4 @@
-import {createIframe, createWorker, sendOn, sendOnce, sendInit} from './platforms/node/events';
+import {createIframe, createWorker, sendOn, sendOnce, sendInit} from './platform/node/events';
 import {OnParams, OnceParams, InitOptions} from './types';
 import {ProxySubscriptionCollection} from './proxy-subscription-collection';
 import {populateSubscriptionMap, subscriptionMap} from './maps';

@@ -1,5 +1,5 @@
 import {Options, SubscriptionIdMap, Field} from './types';
-import {sendCancel, sendUpdate, sendPause, sendResume} from './platforms/web/events';
+import {sendCancel, sendUpdate, sendPause, sendResume} from './platform/web/events';
 import {ProxySubscription} from './proxy-subscription';
 import {invalidateCollection} from './invalidate';
 import {Platform, platform} from './env';

@@ -14,8 +14,9 @@ import { resolveDataPointGet } from '../../data-point';
 
 const DATA_MONITOR_S3 = "http://localhost:8006/api/v1/node-worker";
 const dmPath = path.resolve(__dirname, './data-monitor.js')
-//const localPath = '../../dm-node-worker/bundle/data-monitor.node.js';
-const localPath = '../../dm-client/packages/dm-node-worker/dist/lib-common/index.js';
+
+const localPath = '../../dm-client/packages/dm-node-worker/bundle/data-monitor.worker.js';
+//const localPath = '../../dm-client/packages/dm-node-worker/dist/lib-common/index.js';
 
 const download = async() => {
   return axios({

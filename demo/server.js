@@ -19,6 +19,9 @@ app.route('/').get((req, res) => {
         message
       });
     },
+    error: function(err) {
+      console.log(err);
+    }
   })
 
   console.log(collection);

@@ -11,7 +11,7 @@
     "dist/"
   ],
   "browser": {
-    "./src/node/events.js": "./src/web/events.js"
+    "./dist/lib-modules/platform/node/events.js": "./dist/lib-modules/platform/web/events.js"
   },
   "scripts": {
     "clean": "rm -rf dist/",

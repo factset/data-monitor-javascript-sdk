@@ -1,5 +1,5 @@
 import {dataPoint, resolveDataPointGet, pendingRequests} from './';
-import * as events from '../platforms/web/events';
+import * as events from '../platform/web/events';
 import {ComputedFieldDefinition, RoutedFieldDefinition, Field} from '../types';
 import {computedFieldStore} from './computed-field-store';
 

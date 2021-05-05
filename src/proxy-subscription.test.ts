@@ -1,6 +1,6 @@
 import {ProxySubscription} from './proxy-subscription';
 import * as invalidate from './invalidate';
-import * as events from './platforms/web/events';
+import * as events from './platform/web/events';
 
 jest.mock('./invalidate');
 jest.mock('./events');
