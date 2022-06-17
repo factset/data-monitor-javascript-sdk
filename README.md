@@ -52,10 +52,10 @@ async function subscribe(symbols, fields) {
 }
 
 // pause/resume realtime data updates based on page visibility
-document.addEventListener('visibilitychange', isVisible => {
+document.addEventListener('visibilitychange', () => {
   if (!subscriptionCollection) return;
 
-  if (isVisible) {
+  if (document.visibilityState === 'visible') {
     subscriptionCollection.resume();
   } else {
     subscriptionCollection.pause();
