@@ -1,15 +1,10 @@
-const {DATA_MONITOR_ENV} = process.env;
-
 export enum Environment {
   PROD = 'PROD',
   STG = 'STAGING',
 }
 
 const environments = Object.values(Environment);
-let env: Environment =
-  DATA_MONITOR_ENV && environments.includes(DATA_MONITOR_ENV as Environment)
-    ? (DATA_MONITOR_ENV as Environment)
-    : Environment.PROD;
+let env: Environment = seedEnvironment();
 
 export function getIframeUrl() {
   switch (env) {
@@ -25,4 +20,15 @@ export function getIframeUrl() {
 
 export function setEnvironment(environment: Environment) {
   env = environment;
+}
+
+function seedEnvironment(): Environment {
+  if (typeof process === 'undefined') {
+    return Environment.PROD;
+  }
+
+  const {DATA_MONITOR_ENV} = process.env;
+  return DATA_MONITOR_ENV && environments.includes(DATA_MONITOR_ENV as Environment)
+    ? (DATA_MONITOR_ENV as Environment)
+    : Environment.PROD;
 }
